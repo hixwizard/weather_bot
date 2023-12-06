@@ -20,6 +20,8 @@ def start(message):
 def weather(message):
     # получаем город из сообщения пользователя
   city = message.text
+  if city != str:
+      bot.send_message(message.from_user.id, EX)
   # формируем запрос
   url = 'https://api.openweathermap.org/data/2.5/weather?q='+city+'&units=metric&lang=ru&appid=79d1ca96933b0328e1c7e3e7a26cb347'
   # отправляем запрос на сервер и сразу получаем результат
@@ -43,7 +45,7 @@ def weather(message):
   bot.send_message(message.from_user.id, w_speed)
   bot.send_message(message.from_user.id, w_clouds)
 
-
+EX = 'Возможно, ошибка или опечатка. Отправь название или населённый пункт, чтобы я прислал прогноз.'
 # запускаем бота
 if __name__ == '__main__':
     while True:
@@ -52,4 +54,4 @@ if __name__ == '__main__':
             bot.polling(none_stop=True, interval=0)
         # если возникла ошибка — сообщаем про исключение и продолжаем работу
         except Exception as e: 
-            print('❌ Сработало исключение! ❌')
+            print(e)
