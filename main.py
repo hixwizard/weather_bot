@@ -31,8 +31,9 @@ def weather(message):
   # отправляем запрос на сервер и сразу получаем результат
   response = requests.get(url)
   if response.status_code != 200:
-    raise bot.send_message(message.from_user.id, 'Не могу найти. \n\nНет в базе данных или это выдумка.')
-  weather_data = requests.get(url).json()
+    bot.send_message(message.from_user.id, 'Не могу найти. \n\nНет в базе данных или это выдумка.')
+
+  weather_data = response.json()
   # получаем данные о температуре и о том, как она ощущается
   temperature = round(weather_data['main']['temp'])
   temperature_feels = round(weather_data['main']['feels_like'])
