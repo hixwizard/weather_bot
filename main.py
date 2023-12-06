@@ -6,7 +6,7 @@ import requests
 bot = telebot.TeleBot('6691252717:AAHpMuCC337fl_4U4ucKz_jJlwk8r8b2AIs')
 
 start_txt = (f'Привет!'
-'\n\nОтправь название города, чтобы узнать прогрноз погоды.')
+'\n\nОтправь название города или населённого пункта, чтобы узнать прогрноз погоды.')
 
 
 # обрабатываем старт бота
@@ -27,22 +27,23 @@ def weather(message):
   # получаем данные о температуре и о том, как она ощущается
   temperature = round(weather_data['main']['temp'])
   temperature_feels = round(weather_data['main']['feels_like'])
+  humidity = round(weather_data['main']['humidity'])
+  wind_speed = round(weather_data['wind']['speed'])
+  clouds = round(weather_data['clouds']['all'])
   # формируем ответы
   w_now = 'Сейчас в городе ' + city + ' ' + str(temperature) + ' °C'
   w_feels = 'Ощущается как ' + str(temperature_feels) + ' °C'
+  humidity_air = 'Влажность воздуха ' + str(humidity) + ' %'
+  w_speed = 'Скорость верта ' + str(wind_speed) + ' м/с'
+  w_clouds = str(clouds) + ' % облаков на небе'
   # отправляем значения пользователю
   bot.send_message(message.from_user.id, w_now)
   bot.send_message(message.from_user.id, w_feels)
+  bot.send_message(message.from_user.id, humidity_air)
+  bot.send_message(message.from_user.id, w_speed)
+  bot.send_message(message.from_user.id, w_clouds)
 
-  wind_speed = round(weather_data['wind']['speed'])
-  if wind_speed < 5:
-      bot.send_message(message.from_user.id, '✅ Погода хорошая, ветра почти нет')
-  elif wind_speed < 10:
-      bot.send_message(message.from_user.id, '🤔 На улице ветрено, оденьтесь чуть теплее')
-  elif wind_speed < 20:
-      bot.send_message(message.from_user.id, '❗️ Ветер очень сильный, будьте осторожны, выходя из дома')
-  else:
-      bot.send_message(message.from_user.id, '❌ На улице шторм, на улицу лучше не выходить')
+
 # запускаем бота
 if __name__ == '__main__':
     while True:
