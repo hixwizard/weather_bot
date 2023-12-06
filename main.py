@@ -35,25 +35,51 @@ def weather(message):
 
   weather_data = response.json()
   # получаем данные о температуре и о том, как она ощущается
-  temperature = round(weather_data['main']['temp'])
-  temperature_feels = round(weather_data['main']['feels_like'])
-  humidity = round(weather_data['main']['humidity'])
-  wind_speed = round(weather_data['wind']['speed'])
+  temperature = round((weather_data['main']['temp']), 1)
+  if -100.0 < temperature < -30.0:
+      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n❄❄❄❄')
+  elif -30.0 < temperature < -20.0:
+      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n❄❄❄')
+  elif 0.0 < temperature < -10.0:
+      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n❄❄')
+  elif 10.0 > temperature > 0.0:
+      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n🌡')
+  elif 20.0 > temperature > 10.0:
+      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n🌤')
+  elif 30.0 > temperature > 20.0:
+      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n☀🌤')
+  elif 100.0 > temperature > 30.0:
+      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n☀☀☀')
+
+  temperature_feels = round((weather_data['main']['feels_like']), 1)
+  if -100.0 < temperature_feels < -30.0:
+      bot.send_message(message.from_user.id, 'Ощущается как ' + str(temperature_feels) + ' °C\n❄❄❄❄')
+  elif -30.0 < temperature_feels < -20.0:
+      bot.send_message(message.from_user.id, 'Ощущается как ' + str(temperature_feels) + ' °C\n❄❄❄')
+  elif 0.0 < temperature_feels < -10.0:
+      bot.send_message(message.from_user.id, 'Ощущается как ' + str(temperature_feels) + ' °C\n❄❄')
+  elif 10.0 > temperature_feels > 0.0:
+      bot.send_message(message.from_user.id, 'Ощущается как ' + str(temperature_feels) + ' °C\n🌡')
+  elif 20.0 > temperature_feels > 10.0:
+      bot.send_message(message.from_user.id, 'Ощущается как ' + str(temperature_feels) + ' °C\n🌤')
+  elif 30.0 > temperature_feels > 20.0:
+      bot.send_message(message.from_user.id, 'Ощущается как ' + str(temperature_feels) + ' °C\n☀🌤')
+  elif 100.0 > temperature_feels > 30.0:
+      bot.send_message(message.from_user.id, 'Ощущается как ' + str(temperature_feels) + ' °C\n☀☀☀')
+  humidity = (weather_data['main']['humidity'])
+  wind_speed = (weather_data['wind']['speed'])
   #clouds = round(weather_data['clouds']['all'])
   # формируем ответы
-  w_now = 'Сейчас в городе ' + city + ' ' + str(temperature) + ' °C'
-  w_feels = 'Ощущается как ' + str(temperature_feels) + ' °C'
+  #w_now = 'Сейчас в городе ' + city + ' ' + str(temperature) + ' °C'
+  #w_feels = 'Ощущается как ' + str(temperature_feels) + ' °C'
   humidity_air = 'Влажность воздуха ' + str(humidity) + ' %'
   w_speed = 'Скорость верта ' + str(wind_speed) + ' м/с'
-  #w_clouds = str(clouds) + ' % облаков на небе'
-  # отправляем значения пользователю
-  bot.send_message(message.from_user.id, w_now)
-  bot.send_message(message.from_user.id, w_feels)
+
+  #bot.send_message(message.from_user.id, w_now)
+  #bot.send_message(message.from_user.id, w_feels)
   bot.send_message(message.from_user.id, humidity_air)
   bot.send_message(message.from_user.id, w_speed)
-  #bot.send_message(message.from_user.id, w_clouds)
 
-EX = 'Возможно, ошибка или опечатка. Отправь название или населённый пункт, чтобы я прислал прогноз.'
 # запускаем бота
 if __name__ == '__main__':
     while True:
