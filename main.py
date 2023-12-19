@@ -6,7 +6,7 @@ import requests
 bot = telebot.TeleBot('6691252717:AAHpMuCC337fl_4U4ucKz_jJlwk8r8b2AIs')
 
 start_txt = (f'Привет!'
-'\n\nОтправь название города или населённого пункта, чтобы узнать прогрноз погоды.')
+'\nОтправь название города или населённого пункта, чтобы узнать прогноз погоды.')
 
 
 # обрабатываем старт бота
@@ -20,7 +20,7 @@ def start(message):
 def weather(message):
     # получаем город из сообщения пользователя
   if any(char.isdigit() for char in message.text):
-      bot.send_message(message.from_user.id, 'Ввод содержит цифры. \n\nОтправь название или населённый пункт, чтобы я прислал прогноз.')
+      bot.send_message(message.from_user.id, 'Ввод содержит цифры. \nОтправь название или населённый пункт, чтобы я прислал прогноз.')
 
 
   city = message.text
@@ -31,7 +31,7 @@ def weather(message):
   # отправляем запрос на сервер и сразу получаем результат
   response = requests.get(url)
   if response.status_code != 200:
-    bot.send_message(message.from_user.id, 'Не могу найти. \n\nНет в базе данных или это выдумка.')
+    bot.send_message(message.from_user.id, 'Не могу найти. \nНет в базе данных или это выдумка.')
 
   weather_data = response.json()
   # получаем данные о температуре и о том, как она ощущается
@@ -41,22 +41,9 @@ def weather(message):
   temperature_feels = round((weather_data['main']['feels_like']), 1)
 
   temperature = round((weather_data['main']['temp']), 1)
-  if -100.0 <= temperature <= -30.0:
-      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n❄❄❄❄\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
-  elif -30.0 <= temperature <= -20.0:
-      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n❄❄❄\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
-  elif 0.0 <= temperature <= -10.0:
-      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n❄❄\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
-  elif 10.0 >= temperature >= 0.0:
-      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n🌡\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
-  elif 20.0 >= temperature >= 10.0:
-      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n🌤\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
-  elif 30.0 >= temperature >= 20.0:
-      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n☀🌤\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
-  elif 100.0 >= temperature >= 30.0:
-      bot.send_message(message.from_user.id, 'Сейчас в ' + city + ' ' + str(temperature) + ' °C\n☀☀☀\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
 
-# запускаем бота
+  bot.send_message(message.from_user.id, city + ' ' + str(temperature) + ' °C\nОщущается как ' + str(temperature_feels) + ' °C\nВлажность воздуха ' + str(humidity) + ' %\nСкорость верта ' + str(wind_speed) + ' м/с')
+
 if __name__ == '__main__':
     while True:
         # в бесконечном цикле постоянно опрашиваем бота — есть ли новые сообщения
