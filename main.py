@@ -10,7 +10,7 @@ TOKEN = os.getenv('TOKEN')
 bot = telebot.TeleBot(TOKEN)
 START_TXT = os.getenv('START_TXT')
 ERROR_TXT = os.getenv('ERROR_TXT')
-DIGIT_REQUEST = os.getenv('DIGIT_REQUEST')
+DIGIT_REQUEST = msg.DIGIT_REQUEST
 WEATHER_URL = os.getenv('WEATHER_URL')
 detailed_weather_data = {}  # Словарь для хранения данных о погоде
 
