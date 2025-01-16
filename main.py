@@ -51,25 +51,25 @@ def weather(message):
 
     comments = []
     match temperature:
-        case t if t <= -30:
+        case _ if _ <= -30:
             comments.append(msg.COLD_30)
-        case t if -30 < t <= -20:
+        case _ if -30 < _ <= -20:
             comments.append(msg.COLD_20)
-        case t if -20 < t <= -10:
+        case _ if -20 < _ <= -10:
             comments.append(msg.COLD_10)
-        case t if -10 < t < 0:
+        case _ if -10 < _ < 0:
             comments.append(msg.COLD_0)
-        case t if 0 <= t <= 15:
+        case _ if 0 <= _ <= 15:
             comments.append(msg.HOT_15)
-        case t if 15 < t <= 25:
+        case _ if 15 < _ <= 25:
             comments.append(msg.HOT_25)
         case _:
             comments.append(msg.HOT_HOT)
 
     match wind_speed:
-        case ws if ws > 10:
+        case _ if _ > 10:
             comments.append(msg.WIND_10)
-        case ws if ws > 5:
+        case _ if _ > 5:
             comments.append(msg.WIND_5)
         case _:
             comments.append(msg.JUST_WIND)
@@ -77,21 +77,21 @@ def weather(message):
     def get_wind_direction(degree):
         """Направление ветра по углу."""
         match degree:
-            case d if d >= 337.5 or d < 22.5:
+            case _ if _ >= 337.5 or _ < 22.5:
                 return "северный ветер"
-            case d if 22.5 <= d < 67.5:
+            case _ if 22.5 <= _ < 67.5:
                 return "северо-восточный ветер"
-            case d if 67.5 <= d < 112.5:
+            case _ if 67.5 <= _ < 112.5:
                 return "восточный ветер"
-            case d if 112.5 <= d < 157.5:
+            case _ if 112.5 <= _ < 157.5:
                 return "юго-восточный ветер"
-            case d if 157.5 <= d < 202.5:
+            case _ if 157.5 <= _ < 202.5:
                 return "южный ветер"
-            case d if 202.5 <= d < 247.5:
+            case _ if 202.5 <= _ < 247.5:
                 return "юго-западный ветер"
-            case d if 247.5 <= d < 292.5:
+            case _ if 247.5 <= _ < 292.5:
                 return "западный ветер"
-            case d if 292.5 <= d < 337.5:
+            case _ if 292.5 <= _ < 337.5:
                 return "северо-западный ветер"
 
     wind_direction = get_wind_direction(wind_deg)
